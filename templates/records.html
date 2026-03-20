@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Brailogue</title>
+		<link href="https://fonts.googleapis.com/css?family=Fredoka+One&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+		<link rel = "stylesheet" href = "index.css">
+	</head>
+	<style>
+		.sidenav {
+		height: 100%;
+		width: 160px;
+		position: fixed;
+		z-index: 1;
+		top: 0;
+		left: 0;
+		background-color: #111;
+		overflow-x: hidden;
+		padding-top: 20px;
+		}
+
+		.sidenav a {
+		padding: 6px 8px 6px 16px;
+		text-decoration: none;
+		font-size: 25px;
+		color: #818181;
+		display: block;
+		}
+
+		.sidenav a:hover {
+		color: #f1f1f1;
+		}
+
+		.main {
+		margin-left: 160px; /* Same as the width of the sidenav */
+		font-size: 28px; /* Increased text to enable scrolling */
+		padding: 0px 10px;
+		}
+        @media screen and (max-height: 450px) {
+        .sidenav {padding-top: 15px;}
+        .sidenav a {font-size: 18px;}
+        }
+        header, .row {
+        display: flex;  /* aligns all child elements (flex items) in a row */
+        }
+	</style>
+	<body>
+		<div class="sidenav">
+			<a href="/"">Main Page</a>
+			<a href="/records">Records</a>
+		</div>
+
+		<div style="display: flex;align-items: center;justify-content: center;">
+			<div style="display: flex;justify-content: center;align-items: center;flex-direction: column; width: autos">
+				<h1 id="title" style = "margin-bottom: 20px;">Brailogue Records</h1>
+                <table>
+                
+
+                <div style = "display:flex">
+
+                </div>
+                <tr>
+                    <th>
+                        <textarea id="output" class="textArea"readonly >Name</textarea>
+                    </th>
+                    <th>
+                        <textarea id="output" class="textArea"readonly > Records</textarea>
+                    </th>
+                    <th>
+                        <textarea id="output" class="textArea"readonly >Braille</textarea>
+                    </th>
+                </tr>
+                {% for i in records %}
+                <tr>
+                    <td>
+                        <textarea name = "Name" id="output" class="textArea"readonly >{{i[0]}}</textarea>
+                    </td>
+
+                    <td >
+                        <textarea id="output" class="textArea"readonly >{{i[1]}}</textarea>
+                    </td>
+
+                    <td >
+                        <textarea id="output" class="textArea"readonly >{{i[2]}}</textarea>
+                    </td>
+				{% endfor %}
+                </tr>
+                </table>
+				<br>
+
+				<p>*Only input the initial name of the record if the action is to only delete</p>
+				<form action = "/update" method = "POST">
+					<label> Select Action:</label>
+					<select id = "action" name = "action" onchange="showRecord()">
+						<option value = "delete"> Delete</option>
+						<option value = "update"> Update</option>
+					</select>
+
+					<div style = "display: flex;flex-direction: row;margin:10px">
+						<label style = "margin-right:10px"> Initial Name: </label>
+						<input style = "margin-right:10px" name = "fromname">
+						<label style = "margin-right:10px"> Change Name: </label>
+						<input name = "toname">
+					</div>
+
+					<div style = "display: flex;flex-direction: row;margin:10px">
+						<label style = "margin-right:10px"> Initial Record: </label>
+						<input style = "margin-right:10px" name = "fromrecord">
+						<label style = "margin-right:10px"> Change Record: </label>
+						<input name = "torecord">
+					</div>
+					
+					<div style = "display: flex;flex-direction: row;margin:10px">
+						<button onclick = "submitAction()">
+							Submit
+						</button>
+					</div>
+				</form>
+
+			</div>
+		</div>
+		<script>
+			function submitAction() {
+			document.getElementById("namesend").submit()
+		}
+		</script>
+		<div class="pattern" style="top: 0;height:50px"></div>
+	</body>
+</html>

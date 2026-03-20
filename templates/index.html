@@ -1,1 +1,101 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Brailogue</title>
+		<link href="https://fonts.googleapis.com/css?family=Fredoka+One&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+		<link rel = "stylesheet" href = "index.css">
+	</head>
+	<style>
+		.sidenav {
+		height: 100%;
+		width: 160px;
+		position: fixed;
+		z-index: 1;
+		top: 0;
+		left: 0;
+		background-color: #111;
+		overflow-x: hidden;
+		padding-top: 20px;
+		}
 
+		.sidenav a {
+		padding: 6px 8px 6px 16px;
+		text-decoration: none;
+		font-size: 25px;
+		color: #818181;
+		display: block;
+		}
+
+		.sidenav a:hover {
+		color: #f1f1f1;
+		}
+
+		.main {
+		margin-left: 160px; /* Same as the width of the sidenav */
+		font-size: 28px; /* Increased text to enable scrolling */
+		padding: 0px 10px;
+		}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+	</style>
+	<body>
+
+		<div class="sidenav">
+			<a href="/"">Main Page</a>
+			<a href="/records">Records</a>
+		</div>
+
+		<div style="display: flex;align-items: center;justify-content: center;position: absolute;top: 0;left: 0;right: 0;bottom: 0;">
+			<div style="display: flex;justify-content: center;align-items: center;flex-direction: column; width: 1300px">
+				<h1 id="title">Brailogue</h1>
+				<p style="font-size: 34px;">Your go-to Braille translating solution.</p>
+				<div style="display: flex;width: 40%">
+					<div style="width: 100%">
+						<input type="text" class="textBox" id="textBox" placeholder="Input English text here" onkeyup="sendTextReq(event)" />
+					</div>
+					<div class="micDiv" onclick= "saveFile()">
+						<i class="material-icons">insert_drive_file</i>
+					</div>
+				</div>
+				<div class="outputBox">
+					<textarea id="output" class="textArea" placeholder="Braille output here..." readonly ></textarea>
+				</div>
+			</div>
+		</div>
+		<div class="pattern" style="bottom: 0"></div>
+		<div class="pattern" style="top: 0"></div>
+		
+		<script>
+			function sendTextReq(e) {
+				let val = e.target.value;
+				if(val == "") { return document.getElementById("output").value = ""; }
+				translateBraille(val);
+			}
+
+			function downloadContent() {
+				window.open(`${location.origin}/downloadFile/${encodeURIComponent(document.getElementById("output").value)}`);
+			}
+
+			function translateBraille(text) {
+				let xhttp = new XMLHttpRequest();
+				xhttp.onreadystatechange = function() {
+					if (this.readyState == 4 && this.status == 200) {
+						document.getElementById("output").value = this.responseText;
+					}
+				};
+				xhttp.open("GET", `/text/${encodeURIComponent(text)}`, true);
+				xhttp.send();
+			}
+			function saveFile(){
+				location.href = 'search';
+			}
+
+
+		</script>
+	</body>
+</html>

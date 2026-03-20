@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Brailogue</title>
+		<link href="https://fonts.googleapis.com/css?family=Fredoka+One&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+		<link rel = "stylesheet" href = "index.css">
+	</head>
+	<body>
+		<div style="display: flex;align-items: center;justify-content: center;position: absolute;top: 0;left: 0;right: 0;bottom: 0;">
+			<div style="display: flex;justify-content: center;align-items: center;flex-direction: column; width: 1300px">
+				<h1 id="title">Save Record</h1>
+                <p></p>
+				<div style="display:flex;width: 40%">
+					<form  style = "display:flex;flex-direction: row;" id = "namesend" action = "/namesave" method ="POST">
+						<div style="width: 100%">
+							<input name = "Name" type="text" class="textBox" placeholder="Name to be Saved">
+						</div>
+							<button onclick="submitName">Submit</button>
+						<div>
+
+						</div>
+					</form>
+				</div>
+
+				<div id = "title" style = "font-size: medium;color:#C3073F; margin-top: 20px;">
+					{{no}}
+				</div>
+
+				<div style = "display:flex; flex-direction: row;">
+				<div class="outputBox">
+					<textarea class="textArea"  readonly >{{text}}</textarea>
+				</div>
+				<div class="outputBox">
+					<textarea class="textArea"  readonly >{{braille}}</textarea>
+				</div>
+				</div>
+			</div>
+		</div>
+		<div class="pattern" style="top: 0"></div>
+		<div class="pattern" style="bottom: 0"></div>
+	</body>
+	<script>
+		function submitName() {
+			document.getElementById("namesend").submit()
+		}
+	</script>
+
+</html>
